@@ -9,9 +9,10 @@
 
   <title>Would you join me?</title>
 
-  <!-- Elegant handwritten font -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap"
     rel="stylesheet"
@@ -52,15 +53,16 @@
       font: inherit;
     }
 
-    /* -----------------------------
+    /* =============================
        APP
-    ----------------------------- */
+    ============================== */
 
     #app {
       width: 100%;
       height: 100dvh;
       position: relative;
       overflow: hidden;
+
       background:
         radial-gradient(
           circle at 50% 20%,
@@ -73,13 +75,18 @@
     .screen {
       position: absolute;
       inset: 0;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 32px 24px;
+
       opacity: 0;
       pointer-events: none;
+
       transform: translateX(30px);
+
       transition:
         opacity .55s ease,
         transform .65s cubic-bezier(.22,.61,.36,1);
@@ -97,9 +104,9 @@
       position: relative;
     }
 
-    /* -----------------------------
+    /* =============================
        TYPOGRAPHY
-    ----------------------------- */
+    ============================== */
 
     .eyebrow {
       font-size: 11px;
@@ -137,9 +144,9 @@
       color: var(--coral);
     }
 
-    /* -----------------------------
+    /* =============================
        DOG IMAGES
-    ----------------------------- */
+    ============================== */
 
     .dog {
       display: block;
@@ -167,15 +174,17 @@
       margin-bottom: 18px;
     }
 
-    /* -----------------------------
+    /* =============================
        BUTTONS
-    ----------------------------- */
+    ============================== */
 
     .button-row {
       display: flex;
       justify-content: center;
       gap: 14px;
+
       margin-top: 38px;
+
       position: relative;
       min-height: 58px;
     }
@@ -184,13 +193,18 @@
       border: 1px solid var(--ink);
       background: transparent;
       color: var(--ink);
+
       border-radius: 999px;
+
       padding: 14px 30px;
+
       cursor: pointer;
+
       transition:
         transform .25s ease,
         background .25s ease,
         color .25s ease;
+
       min-width: 112px;
     }
 
@@ -208,23 +222,27 @@
       border-color: var(--coral);
     }
 
-    /* The naughty NO button */
     #noBtn {
       position: relative;
       z-index: 20;
     }
 
-    /* -----------------------------
+    /* =============================
        NEXT ARROW
-    ----------------------------- */
+    ============================== */
 
     .next {
       margin-top: 48px;
+
       border: none;
       background: transparent;
+
       color: var(--ink);
+
       font-size: 28px;
+
       cursor: pointer;
+
       transition: transform .25s ease;
     }
 
@@ -232,9 +250,9 @@
       transform: translateX(7px);
     }
 
-    /* -----------------------------
+    /* =============================
        DATE SCREEN
-    ----------------------------- */
+    ============================== */
 
     .date-heading {
       margin-bottom: 36px;
@@ -251,6 +269,7 @@
     .calendar {
       width: min(650px, 100%);
       margin: 0 auto;
+
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
@@ -262,20 +281,29 @@
 
     .weekday {
       padding: 15px 5px;
+
       font-size: 10px;
       letter-spacing: .14em;
+
       color: var(--muted);
+
       text-transform: uppercase;
     }
 
     .date {
       min-height: 110px;
+
       border-top: 1px solid var(--line);
       border-right: 1px solid var(--line);
+
       background: transparent;
+
       cursor: pointer;
+
       position: relative;
+
       padding: 16px 8px;
+
       transition: background .25s ease;
     }
 
@@ -293,9 +321,13 @@
 
     .date-note {
       margin-top: 10px;
+
       font-family: "Caveat", cursive;
+
       font-size: 16px;
+
       color: var(--coral);
+
       line-height: 1.1;
     }
 
@@ -313,9 +345,9 @@
       color: #f3c4b2;
     }
 
-    /* -----------------------------
+    /* =============================
        FOOD SCREEN
-    ----------------------------- */
+    ============================== */
 
     .food-heading {
       margin-bottom: 30px;
@@ -323,36 +355,49 @@
 
     .food-list {
       width: min(700px, 100%);
+
       margin: 0 auto;
+
       display: flex;
       flex-direction: column;
+
       gap: 10px;
     }
 
     .food-card {
       display: grid;
       grid-template-columns: 25% 75%;
+
       min-height: 88px;
+
       border: 1px solid var(--line);
+
       background: rgba(255,255,255,.38);
+
       text-align: left;
+
       cursor: pointer;
+
       transition:
         transform .25s ease,
         background .25s ease,
         border-color .25s ease;
+
       overflow: hidden;
     }
 
     .food-card:hover {
       transform: translateY(-3px);
+
       background: rgba(255,255,255,.75);
+
       border-color: var(--ink);
     }
 
     .food-card.selected {
       background: var(--ink);
       color: white;
+
       border-color: var(--ink);
     }
 
@@ -360,7 +405,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+
       padding: 16px;
+
       border-right: 1px solid var(--line);
     }
 
@@ -376,8 +423,11 @@
 
     .cuisine-native {
       font-family: "Caveat", cursive;
+
       font-size: 17px;
+
       color: var(--coral);
+
       margin-top: 4px;
     }
 
@@ -387,9 +437,11 @@
 
     .restaurant-info {
       padding: 16px 20px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 15px;
     }
 
@@ -400,7 +452,9 @@
 
     .restaurant-address {
       margin-top: 5px;
+
       color: var(--muted);
+
       font-size: 12px;
     }
 
@@ -410,11 +464,17 @@
 
     .maps-link {
       flex-shrink: 0;
+
       color: var(--ink);
+
       text-decoration: none;
+
       font-size: 11px;
+
       letter-spacing: .05em;
+
       border-bottom: 1px solid currentColor;
+
       padding-bottom: 2px;
     }
 
@@ -422,15 +482,18 @@
       color: white;
     }
 
-    /* -----------------------------
+    /* =============================
        DOG TRANSITION
-    ----------------------------- */
+    ============================== */
 
     .dogs-running {
       position: relative;
+
       width: min(600px, 90vw);
       height: 250px;
+
       margin: 20px auto 0;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -439,42 +502,61 @@
     .running-dog {
       width: min(210px, 38vw);
       height: 210px;
+
       object-fit: contain;
     }
 
     .dog-left {
-      animation: runLeft 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+      animation:
+        runLeft 1.4s cubic-bezier(.2,.8,.2,1)
+        forwards;
     }
 
     .dog-right {
-      animation: runRight 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+      animation:
+        runRight 1.4s cubic-bezier(.2,.8,.2,1)
+        forwards;
     }
 
     @keyframes runLeft {
       from {
-        transform: translateX(-120px) rotate(-8deg);
+        transform:
+          translateX(-120px)
+          rotate(-8deg);
+
         opacity: 0;
       }
+
       to {
-        transform: translateX(65px) rotate(3deg);
+        transform:
+          translateX(65px)
+          rotate(3deg);
+
         opacity: 1;
       }
     }
 
     @keyframes runRight {
       from {
-        transform: translateX(120px) rotate(8deg);
+        transform:
+          translateX(120px)
+          rotate(8deg);
+
         opacity: 0;
       }
+
       to {
-        transform: translateX(-65px) rotate(-3deg);
+        transform:
+          translateX(-65px)
+          rotate(-3deg);
+
         opacity: 1;
       }
     }
 
-    /* -----------------------------
+    /* =============================
        FINAL SCREEN
-    ----------------------------- */
+    ============================== */
 
     .final-title {
       font-size: clamp(35px, 8vw, 70px);
@@ -483,51 +565,68 @@
     .final-image {
       width: min(520px, 85vw);
       height: min(390px, 55vw);
+
       object-fit: contain;
+
       margin: 15px auto 18px;
+
       mix-blend-mode: multiply;
     }
 
     .final-hand {
       font-family: "Caveat", cursive;
+
       color: var(--coral);
+
       font-size: 28px;
+
       margin-top: 5px;
     }
 
-    /* -----------------------------
+    /* =============================
        PROGRESS
-    ----------------------------- */
+    ============================== */
 
     .progress {
       position: fixed;
+
       left: 50%;
       bottom: 22px;
+
       transform: translateX(-50%);
+
       display: flex;
+
       gap: 6px;
+
       z-index: 100;
     }
 
     .progress-dot {
       width: 5px;
       height: 5px;
+
       border-radius: 50%;
+
       background: #cfc6bb;
+
       transition: all .3s ease;
     }
 
     .progress-dot.active {
       width: 18px;
+
       border-radius: 10px;
+
       background: var(--ink);
     }
 
-    /* -----------------------------
+    /* =============================
        MOBILE
-    ----------------------------- */
+    ============================== */
 
     @media (max-width: 600px) {
+
       .screen {
         padding: 25px 18px 55px;
       }
@@ -588,6 +687,7 @@
           transform: translateX(-100px);
           opacity: 0;
         }
+
         to {
           transform: translateX(40px);
           opacity: 1;
@@ -599,6 +699,7 @@
           transform: translateX(100px);
           opacity: 0;
         }
+
         to {
           transform: translateX(-40px);
           opacity: 1;
@@ -610,615 +711,994 @@
 
 <body>
 
-<div id="app">
-
-  <!-- =========================================
-       SCREEN 1
-  ========================================== -->
-
-  <section class="screen active" id="screen1">
-    <div class="content">
-
-      <img
-        src="images/first-page.gif"
-        class="dog dog-intro"
-        alt=""
-      >
-
-      <p class="eyebrow">a small invitation</p>
-
-      <h1 class="title">
-        okay, I know I said<br>
-        I wouldn't ask you out<br>
-        for a while...
-      </h1>
-
-      <button class="next" onclick="goTo(1)">
-        ↓
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 2
-  ========================================== -->
-
-  <section class="screen" id="screen2">
-    <div class="content">
-
-      <img
-        src="images/third-page.gif"
-        class="dog dog-choice"
-        alt=""
-      >
-
-      <p class="body-copy">
-        but there are way too many good restaurants
-        I want to try.<br><br>
-
-        I can't finish them all by myself.
-      </p>
-
-      <img
-        src="images/fourth-page.gif"
-        class="dog dog-date"
-        alt=""
-      >
-
-      <p class="hand" style="font-size: 30px;">
-        would you join me?
-      </p>
-
-      <div class="button-row">
-        <button
-          class="btn btn-primary"
-          onclick="acceptInvitation()"
-        >
-          YES ♡
-        </button>
-
-        <button
-          class="btn"
-          id="noBtn"
-          onmouseenter="escapeNo()"
-          ontouchstart="escapeNo(event)"
-        >
-          NO
-        </button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 3 — DATE
-  ========================================== -->
-
-  <section class="screen" id="screen3">
-    <div class="content">
-
-      <div class="date-heading">
-        <p class="eyebrow">chapter two</p>
-
-        <h1 class="title">
-          so... when are we eating?
-        </h1>
-
-        <div class="month">
-          September 2026
-        </div>
-      </div>
-
-      <div class="calendar">
-
-        <div class="calendar-grid">
-
-          <div class="weekday">MON</div>
-          <div class="weekday">TUE</div>
-          <div class="weekday">WED</div>
-          <div class="weekday">THU</div>
-          <div class="weekday">FRI</div>
-          <div class="weekday">SAT</div>
-          <div class="weekday">SUN</div>
-
-          <button class="date" onclick="selectDate(22, this)">
-            <div class="date-number">22</div>
-          </button>
-
-          <button class="date" onclick="selectDate(23, this)">
-            <div class="date-number">23</div>
-            <div class="oyster">🦪</div>
-            <div class="date-note">oysters</div>
-          </button>
-
-          <button class="date" onclick="selectDate(24, this)">
-            <div class="date-number">24</div>
-          </button>
-
-          <button class="date" onclick="selectDate(25, this)">
-            <div class="date-number">25</div>
-          </button>
-
-          <button class="date" onclick="selectDate(26, this)">
-            <div class="date-number">26</div>
-          </button>
-
-          <button class="date" onclick="selectDate(27, this)">
-            <div class="date-number">27</div>
-          </button>
-
-          <button class="date" onclick="selectDate(28, this)">
-            <div class="date-number">28</div>
-          </button>
-
-        </div>
-
-      </div>
-
-      <div id="selectedDateText" class="small-hand" style="margin-top:22px; min-height:25px;"></div>
-
-      <button
-        class="next"
-        id="dateNext"
-        onclick="goTo(3)"
-        style="display:none;"
-      >
-        →
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 4 — FOOD
-  ========================================== -->
-
-  <section class="screen" id="screen4">
-    <div class="content">
-
-      <div class="food-heading">
-        <p class="eyebrow">chapter three</p>
-
-        <h1 class="title">
-          what are you craving?
-        </h1>
-      </div>
-
-      <div class="food-list">
-
-        <!-- CHINESE -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Chinese')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Chinese</div>
-            <div class="cuisine-native">中餐</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                Hotpot Man
-              </div>
-              <div class="restaurant-address">
-                Huai Khwang / Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/cSnxcBHTi1ifjnHM8?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- KOREAN -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Korean')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Korean</div>
-            <div class="cuisine-native">한식</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                Gopchang House
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/dZiTt9uEAbGa2RNV6?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- GREEK -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Greek')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Greek</div>
-            <div class="cuisine-native">Ελληνικά</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                AVRA
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/LeWzXUoYLp9rSrBb7?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- MEXICAN -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Mexican')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Mexican</div>
-            <div class="cuisine-native">Mexicano</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                La Monita Taqueria
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/PDhr5KC6ZoHbaQby7?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- PIZZA -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Pizza')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Pizza</div>
-            <div class="cuisine-native">Pizza</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                90Grams
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/S9KHgJ3jD99HaWQr8?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <button
-        class="next"
-        id="foodNext"
-        onclick="goTo(4)"
-        style="display:none;"
-      >
-        →
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 5 — DOGS
-  ========================================== -->
-
-  <section class="screen" id="screen5">
-    <div class="content">
-
-      <p class="eyebrow">excellent choice</p>
-
-      <h1 class="title">
-        good choice.
-      </h1>
-
-      <div class="dogs-running">
+  <!--
+    ==========================================
+    HIDDEN GOOGLE FORM SUBMISSION
+    ==========================================
+  -->
+
+  <iframe
+    name="googleFormTarget"
+    id="googleFormTarget"
+    style="display:none;"
+  ></iframe>
+
+  <form
+    id="googleForm"
+    action="https://docs.google.com/forms/d/e/1FAIpQLSfZBdWSg2HXJMspBfNLUW8DLUMSp9EBNBRELMJGCgzYUaI9IQ/formResponse"
+    method="POST"
+    target="googleFormTarget"
+    style="display:none;"
+  >
+
+    <!-- DATE -->
+    <input
+      type="text"
+      name="entry.1380454551"
+      id="googleDate"
+    />
+
+    <!-- FOOD / RESTAURANT -->
+    <input
+      type="text"
+      name="entry.1936826474"
+      id="googleFood"
+    />
+
+  </form>
+
+
+  <div id="app">
+
+    <!-- =========================================
+         SCREEN 1
+    ========================================== -->
+
+    <section class="screen active" id="screen1">
+
+      <div class="content">
 
         <img
           src="images/first-page.gif"
-          class="running-dog dog-left"
+          class="dog dog-intro"
           alt=""
         >
+
+        <p class="eyebrow">
+          a small invitation
+        </p>
+
+        <h1 class="title">
+          okay, I know I said<br>
+          I wouldn't ask you out<br>
+          for a while...
+        </h1>
+
+        <button
+          class="next"
+          onclick="goTo(1)"
+        >
+          ↓
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SCREEN 2
+    ========================================== -->
+
+    <section class="screen" id="screen2">
+
+      <div class="content">
 
         <img
-          src="images/webwxgetmsgimg-2.gif"
-          class="running-dog dog-right"
+          src="images/third-page.gif"
+          class="dog dog-choice"
           alt=""
         >
 
+        <p class="body-copy">
+
+          but there are way too many good restaurants
+          I want to try.<br><br>
+
+          I can't finish them all by myself.
+
+        </p>
+
+        <img
+          src="images/fourth-page.gif"
+          class="dog dog-date"
+          alt=""
+        >
+
+        <p
+          class="hand"
+          style="font-size: 30px;"
+        >
+          would you join me?
+        </p>
+
+        <div class="button-row">
+
+          <button
+            class="btn btn-primary"
+            onclick="acceptInvitation()"
+          >
+            YES ♡
+          </button>
+
+          <button
+            class="btn"
+            id="noBtn"
+            onmouseenter="escapeNo()"
+            ontouchstart="escapeNo(event)"
+          >
+            NO
+          </button>
+
+        </div>
+
       </div>
 
-      <p class="hand" style="font-size:30px;">
-        someone is already getting hungry.
-      </p>
-
-      <button
-        class="next"
-        onclick="goTo(5)"
-      >
-        →
-      </button>
-
-    </div>
-  </section>
+    </section>
 
 
-  <!-- =========================================
-       SCREEN 6 — FINAL
-  ========================================== -->
+    <!-- =========================================
+         SCREEN 3 — DATE
+    ========================================== -->
 
-  <section class="screen" id="screen6">
-    <div class="content">
+    <section class="screen" id="screen3">
 
-      <p class="eyebrow">one last thing</p>
+      <div class="content">
 
-      <h1 class="title final-title">
-        it's a date.
-      </h1>
+        <div class="date-heading">
 
-      <img
-        src="images/fifth-page.jpeg"
-        class="final-image"
-        alt="two little dogs having dinner"
-      >
+          <p class="eyebrow">
+            chapter two
+          </p>
 
-      <div class="final-hand">
-        see you soon ♡
+          <h1 class="title">
+            so... when are we eating?
+          </h1>
+
+          <div class="month">
+            September 2026
+          </div>
+
+        </div>
+
+
+        <div class="calendar">
+
+          <div class="calendar-grid">
+
+            <div class="weekday">MON</div>
+            <div class="weekday">TUE</div>
+            <div class="weekday">WED</div>
+            <div class="weekday">THU</div>
+            <div class="weekday">FRI</div>
+            <div class="weekday">SAT</div>
+            <div class="weekday">SUN</div>
+
+
+            <button
+              class="date"
+              onclick="selectDate(22, this)"
+            >
+              <div class="date-number">
+                22
+              </div>
+            </button>
+
+
+            <button
+              class="date"
+              onclick="selectDate(23, this)"
+            >
+
+              <div class="date-number">
+                23
+              </div>
+
+              <div class="oyster">
+                🦪
+              </div>
+
+              <div class="date-note">
+                oysters
+              </div>
+
+            </button>
+
+
+            <button
+              class="date"
+              onclick="selectDate(24, this)"
+            >
+              <div class="date-number">
+                24
+              </div>
+            </button>
+
+
+            <button
+              class="date"
+              onclick="selectDate(25, this)"
+            >
+              <div class="date-number">
+                25
+              </div>
+            </button>
+
+
+            <button
+              class="date"
+              onclick="selectDate(26, this)"
+            >
+              <div class="date-number">
+                26
+              </div>
+            </button>
+
+
+            <button
+              class="date"
+              onclick="selectDate(27, this)"
+            >
+              <div class="date-number">
+                27
+              </div>
+            </button>
+
+
+            <button
+              class="date"
+              onclick="selectDate(28, this)"
+            >
+              <div class="date-number">
+                28
+              </div>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="selectedDateText"
+          class="small-hand"
+          style="margin-top:22px; min-height:25px;"
+        ></div>
+
+
+        <button
+          class="next"
+          id="dateNext"
+          onclick="goTo(3)"
+          style="display:none;"
+        >
+          →
+        </button>
+
       </div>
 
-      <p class="small-hand">
-        don't be late.
-      </p>
+    </section>
+
+
+    <!-- =========================================
+         SCREEN 4 — FOOD
+    ========================================== -->
+
+    <section class="screen" id="screen4">
+
+      <div class="content">
+
+        <div class="food-heading">
+
+          <p class="eyebrow">
+            chapter three
+          </p>
+
+          <h1 class="title">
+            what are you craving?
+          </h1>
+
+        </div>
+
+
+        <div class="food-list">
+
+
+          <!-- CHINESE -->
+
+          <div
+            class="food-card"
+            onclick="selectFood(this, 'Chinese', 'Hotpot Man')"
+          >
+
+            <div class="cuisine">
+
+              <div class="cuisine-name">
+                Chinese
+              </div>
+
+              <div class="cuisine-native">
+                中餐
+              </div>
+
+            </div>
+
+
+            <div class="restaurant-info">
+
+              <div>
+
+                <div class="restaurant-name">
+                  Hotpot Man
+                </div>
+
+                <div class="restaurant-address">
+                  Huai Khwang / Bangkok
+                </div>
+
+              </div>
+
+
+              <a
+                class="maps-link"
+                href="https://maps.app.goo.gl/cSnxcBHTi1ifjnHM8?g_st=ic"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >
+                Google Maps ↗
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- KOREAN -->
+
+          <div
+            class="food-card"
+            onclick="selectFood(this, 'Korean', 'Gopchang House')"
+          >
+
+            <div class="cuisine">
+
+              <div class="cuisine-name">
+                Korean
+              </div>
+
+              <div class="cuisine-native">
+                한식
+              </div>
+
+            </div>
+
+
+            <div class="restaurant-info">
+
+              <div>
+
+                <div class="restaurant-name">
+                  Gopchang House
+                </div>
+
+                <div class="restaurant-address">
+                  Bangkok
+                </div>
+
+              </div>
+
+
+              <a
+                class="maps-link"
+                href="https://maps.app.goo.gl/dZiTt9uEAbGa2RNV6?g_st=ic"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >
+                Google Maps ↗
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- GREEK -->
+
+          <div
+            class="food-card"
+            onclick="selectFood(this, 'Greek', 'AVRA')"
+          >
+
+            <div class="cuisine">
+
+              <div class="cuisine-name">
+                Greek
+              </div>
+
+              <div class="cuisine-native">
+                Ελληνικά
+              </div>
+
+            </div>
+
+
+            <div class="restaurant-info">
+
+              <div>
+
+                <div class="restaurant-name">
+                  AVRA
+                </div>
+
+                <div class="restaurant-address">
+                  Bangkok
+                </div>
+
+              </div>
+
+
+              <a
+                class="maps-link"
+                href="https://maps.app.goo.gl/LeWzXUoYLp9rSrBb7?g_st=ic"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >
+                Google Maps ↗
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- MEXICAN -->
+
+          <div
+            class="food-card"
+            onclick="selectFood(this, 'Mexican', 'La Monita Taqueria')"
+          >
+
+            <div class="cuisine">
+
+              <div class="cuisine-name">
+                Mexican
+              </div>
+
+              <div class="cuisine-native">
+                Mexicano
+              </div>
+
+            </div>
+
+
+            <div class="restaurant-info">
+
+              <div>
+
+                <div class="restaurant-name">
+                  La Monita Taqueria
+                </div>
+
+                <div class="restaurant-address">
+                  Bangkok
+                </div>
+
+              </div>
+
+
+              <a
+                class="maps-link"
+                href="https://maps.app.goo.gl/PDhr5KC6ZoHbaQby7?g_st=ic"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >
+                Google Maps ↗
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- PIZZA -->
+
+          <div
+            class="food-card"
+            onclick="selectFood(this, 'Pizza', '90Grams')"
+          >
+
+            <div class="cuisine">
+
+              <div class="cuisine-name">
+                Pizza
+              </div>
+
+              <div class="cuisine-native">
+                Pizza
+              </div>
+
+            </div>
+
+
+            <div class="restaurant-info">
+
+              <div>
+
+                <div class="restaurant-name">
+                  90Grams
+                </div>
+
+                <div class="restaurant-address">
+                  Bangkok
+                </div>
+
+              </div>
+
+
+              <a
+                class="maps-link"
+                href="https://maps.app.goo.gl/S9KHgJ3jD99HaWQr8?g_st=ic"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >
+                Google Maps ↗
+              </a>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <button
+          class="next"
+          id="foodNext"
+          onclick="goTo(4)"
+          style="display:none;"
+        >
+          →
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SCREEN 5 — DOGS
+    ========================================== -->
+
+    <section class="screen" id="screen5">
+
+      <div class="content">
+
+        <p class="eyebrow">
+          excellent choice
+        </p>
+
+        <h1 class="title">
+          good choice.
+        </h1>
+
+
+        <div class="dogs-running">
+
+          <img
+            src="images/first-page.gif"
+            class="running-dog dog-left"
+            alt=""
+          >
+
+          <img
+            src="images/webwxgetmsgimg-2.gif"
+            class="running-dog dog-right"
+            alt=""
+          >
+
+        </div>
+
+
+        <p
+          class="hand"
+          style="font-size:30px;"
+        >
+          someone is already getting hungry.
+        </p>
+
+
+        <button
+          class="next"
+          onclick="finishAndSubmit()"
+        >
+          →
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SCREEN 6 — FINAL
+    ========================================== -->
+
+    <section class="screen" id="screen6">
+
+      <div class="content">
+
+        <p class="eyebrow">
+          one last thing
+        </p>
+
+        <h1 class="title final-title">
+          it's a date.
+        </h1>
+
+
+        <img
+          src="images/fifth-page.jpeg"
+          class="final-image"
+          alt="two little dogs having dinner"
+        >
+
+
+        <div class="final-hand">
+          see you soon ♡
+        </div>
+
+        <p class="small-hand">
+          don't be late.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         PROGRESS
+    ========================================== -->
+
+    <div class="progress">
+
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
 
     </div>
-  </section>
 
-
-  <!-- =========================================
-       PROGRESS
-  ========================================== -->
-
-  <div class="progress">
-    <div class="progress-dot active"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
   </div>
 
-</div>
+
+  <script>
+
+    /* =========================================
+       STATE
+    ========================================== */
+
+    let currentScreen = 0;
+
+    let selectedDate = null;
+    let selectedFood = null;
+    let selectedRestaurant = null;
+
+    let submitted = false;
 
 
-<script>
+    /* =========================================
+       SCREEN NAVIGATION
+    ========================================== */
 
-  /* =========================================
-     STATE
-  ========================================== */
+    function goTo(index) {
 
-  let currentScreen = 0;
-  let selectedDate = null;
-  let selectedFood = null;
+      const screens =
+        document.querySelectorAll(".screen");
 
-
-  /* =========================================
-     SCREEN NAVIGATION
-  ========================================== */
-
-  function goTo(index) {
-
-    const screens = document.querySelectorAll(".screen");
-    const dots = document.querySelectorAll(".progress-dot");
-
-    screens.forEach((screen, i) => {
-      screen.classList.toggle("active", i === index);
-    });
-
-    dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === index);
-    });
-
-    currentScreen = index;
-
-    window.scrollTo(0, 0);
-  }
+      const dots =
+        document.querySelectorAll(".progress-dot");
 
 
-  /* =========================================
-     YES
-  ========================================== */
+      screens.forEach((screen, i) => {
 
-  function acceptInvitation() {
-    goTo(2);
-  }
+        screen.classList.toggle(
+          "active",
+          i === index
+        );
 
-
-  /* =========================================
-     NO BUTTON
-  ========================================== */
-
-  function escapeNo(event) {
-
-    if (event) {
-      event.preventDefault();
-    }
-
-    const button = document.getElementById("noBtn");
-
-    const padding = 25;
-
-    const buttonWidth = button.offsetWidth;
-    const buttonHeight = button.offsetHeight;
-
-    const maxX = window.innerWidth - buttonWidth - padding;
-    const maxY = window.innerHeight - buttonHeight - padding;
-
-    const minX = padding;
-    const minY = padding;
-
-    const x =
-      minX +
-      Math.random() *
-      Math.max(0, maxX - minX);
-
-    const y =
-      minY +
-      Math.random() *
-      Math.max(0, maxY - minY);
-
-    button.style.position = "fixed";
-    button.style.left = `${x}px`;
-    button.style.top = `${y}px`;
-  }
-
-
-  /* =========================================
-     DATE
-  ========================================== */
-
-  function selectDate(day, element) {
-
-    document
-      .querySelectorAll(".date")
-      .forEach(date => {
-        date.classList.remove("selected");
       });
 
-    element.classList.add("selected");
 
-    selectedDate = day;
+      dots.forEach((dot, i) => {
 
-    const text =
-      document.getElementById("selectedDateText");
+        dot.classList.toggle(
+          "active",
+          i === index
+        );
 
-    if (day === 23) {
-
-      text.innerHTML =
-        "September 23 — oyster night 🦪";
-
-    } else {
-
-      text.innerHTML =
-        `September ${day} — sounds good.`;
-
-    }
-
-    document.getElementById("dateNext").style.display =
-      "inline-block";
-  }
-
-
-  /* =========================================
-     FOOD
-  ========================================== */
-
-  function selectFood(card, food) {
-
-    document
-      .querySelectorAll(".food-card")
-      .forEach(item => {
-        item.classList.remove("selected");
       });
 
-    card.classList.add("selected");
 
-    selectedFood = food;
+      currentScreen = index;
 
-    document.getElementById("foodNext").style.display =
-      "inline-block";
-  }
-
-
-  /* =========================================
-     RESET NO BUTTON
-  ========================================== */
-
-  window.addEventListener("resize", () => {
-
-    const button =
-      document.getElementById("noBtn");
-
-    if (currentScreen !== 1) {
-
-      button.style.position = "";
-      button.style.left = "";
-      button.style.top = "";
+      window.scrollTo(0, 0);
 
     }
 
-  });
 
-</script>
+    /* =========================================
+       YES
+    ========================================== */
+
+    function acceptInvitation() {
+
+      goTo(2);
+
+    }
+
+
+    /* =========================================
+       NO BUTTON
+    ========================================== */
+
+    function escapeNo(event) {
+
+      if (event) {
+        event.preventDefault();
+      }
+
+
+      const button =
+        document.getElementById("noBtn");
+
+
+      const padding = 25;
+
+      const buttonWidth =
+        button.offsetWidth;
+
+      const buttonHeight =
+        button.offsetHeight;
+
+
+      const maxX =
+        window.innerWidth -
+        buttonWidth -
+        padding;
+
+
+      const maxY =
+        window.innerHeight -
+        buttonHeight -
+        padding;
+
+
+      const minX = padding;
+      const minY = padding;
+
+
+      const x =
+        minX +
+        Math.random() *
+        Math.max(0, maxX - minX);
+
+
+      const y =
+        minY +
+        Math.random() *
+        Math.max(0, maxY - minY);
+
+
+      button.style.position = "fixed";
+
+      button.style.left = `${x}px`;
+
+      button.style.top = `${y}px`;
+
+    }
+
+
+    /* =========================================
+       DATE
+    ========================================== */
+
+    function selectDate(day, element) {
+
+      document
+        .querySelectorAll(".date")
+        .forEach(date => {
+
+          date.classList.remove("selected");
+
+        });
+
+
+      element.classList.add("selected");
+
+
+      selectedDate = day;
+
+
+      const text =
+        document.getElementById(
+          "selectedDateText"
+        );
+
+
+      if (day === 23) {
+
+        text.innerHTML =
+          "September 23 — oyster night 🦪";
+
+      } else {
+
+        text.innerHTML =
+          `September ${day} — sounds good.`;
+
+      }
+
+
+      document.getElementById(
+        "dateNext"
+      ).style.display = "inline-block";
+
+    }
+
+
+    /* =========================================
+       FOOD
+    ========================================== */
+
+    function selectFood(
+      card,
+      food,
+      restaurant
+    ) {
+
+      document
+        .querySelectorAll(".food-card")
+        .forEach(item => {
+
+          item.classList.remove(
+            "selected"
+          );
+
+        });
+
+
+      card.classList.add("selected");
+
+
+      selectedFood = food;
+
+      selectedRestaurant = restaurant;
+
+
+      document.getElementById(
+        "foodNext"
+      ).style.display = "inline-block";
+
+    }
+
+
+    /* =========================================
+       GOOGLE FORM SUBMISSION
+    ========================================== */
+
+    function submitToGoogleForm() {
+
+      if (submitted) {
+        return;
+      }
+
+
+      if (!selectedDate || !selectedFood) {
+        return;
+      }
+
+
+      /*
+        Google Form field #1
+        = selected date
+      */
+
+      document.getElementById(
+        "googleDate"
+      ).value =
+        `September ${selectedDate}, 2026`;
+
+
+      /*
+        Google Form field #2
+        = food + restaurant
+      */
+
+      document.getElementById(
+        "googleFood"
+      ).value =
+        `${selectedFood} — ${selectedRestaurant}`;
+
+
+      /*
+        Submit silently into hidden iframe.
+        The user stays on this page.
+      */
+
+      document
+        .getElementById("googleForm")
+        .submit();
+
+
+      submitted = true;
+
+    }
+
+
+    /* =========================================
+       FINISH
+    ========================================== */
+
+    function finishAndSubmit() {
+
+      /*
+        First send the data
+        */
+
+      submitToGoogleForm();
+
+
+      /*
+        Then show the final page
+        */
+
+      goTo(5);
+
+    }
+
+
+    /* =========================================
+       RESET NO BUTTON
+    ========================================== */
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        const button =
+          document.getElementById("noBtn");
+
+
+        if (currentScreen !== 1) {
+
+          button.style.position = "";
+          button.style.left = "";
+          button.style.top = "";
+
+        }
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
