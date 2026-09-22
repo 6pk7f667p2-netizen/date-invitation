@@ -1,1066 +1,1225 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-
-  <title>Would you join me?</title>
-
-  <!-- Elegant handwritten font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --cream: #f7f3ec;
-      --paper: #fcfaf6;
-      --ink: #252321;
-      --muted: #81766e;
-      --coral: #b86b52;
-      --line: #ddd5ca;
-      --yellow: #e8c98e;
-      --white: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
-    body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: var(--cream);
-      color: var(--ink);
-    }
-
-    body {
-      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    /* -----------------------------
-       APP
-    ----------------------------- */
-
-    #app {
-      width: 100%;
-      height: 100dvh;
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(
-          circle at 50% 20%,
-          rgba(255,255,255,.7),
-          transparent 45%
-        ),
-        var(--cream);
-    }
-
-    .screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 24px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(30px);
-      transition:
-        opacity .55s ease,
-        transform .65s cubic-bezier(.22,.61,.36,1);
-    }
-
-    .screen.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-    }
-
-    .content {
-      width: min(720px, 100%);
-      text-align: center;
-      position: relative;
-    }
-
-    /* -----------------------------
-       TYPOGRAPHY
-    ----------------------------- */
-
-    .eyebrow {
-      font-size: 11px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-
-    .title {
-      font-size: clamp(30px, 7vw, 62px);
-      line-height: 1.08;
-      letter-spacing: -.045em;
-      font-weight: 500;
-      margin: 0;
-    }
-
-    .body-copy {
-      margin: 28px auto 0;
-      max-width: 500px;
-      color: var(--muted);
-      font-size: clamp(15px, 2vw, 18px);
-      line-height: 1.8;
-    }
-
-    .hand {
-      font-family: "Caveat", cursive;
-      color: var(--coral);
-      font-weight: 500;
-    }
-
-    .small-hand {
-      font-family: "Caveat", cursive;
-      font-size: 19px;
-      color: var(--coral);
-    }
-
-    /* -----------------------------
-       DOG IMAGES
-    ----------------------------- */
-
-    .dog {
-      display: block;
-      object-fit: contain;
-      margin: 0 auto;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    .dog-intro {
-      width: min(190px, 42vw);
-      height: min(190px, 42vw);
-      margin-bottom: 28px;
-    }
-
-    .dog-choice {
-      width: min(230px, 52vw);
-      height: min(230px, 52vw);
-      margin-bottom: 24px;
-    }
-
-    .dog-date {
-      width: min(160px, 36vw);
-      height: min(160px, 36vw);
-      margin-bottom: 18px;
-    }
-
-    /* -----------------------------
-       BUTTONS
-    ----------------------------- */
-
-    .button-row {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 38px;
-      position: relative;
-      min-height: 58px;
-    }
-
-    .btn {
-      border: 1px solid var(--ink);
-      background: transparent;
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 14px 30px;
-      cursor: pointer;
-      transition:
-        transform .25s ease,
-        background .25s ease,
-        color .25s ease;
-      min-width: 112px;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: var(--ink);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--coral);
-      border-color: var(--coral);
-    }
-
-    /* The naughty NO button */
-    #noBtn {
-      position: relative;
-      z-index: 20;
-    }
-
-    /* -----------------------------
-       NEXT ARROW
-    ----------------------------- */
-
-    .next {
-      margin-top: 48px;
-      border: none;
-      background: transparent;
-      color: var(--ink);
-      font-size: 28px;
-      cursor: pointer;
-      transition: transform .25s ease;
-    }
-
-    .next:hover {
-      transform: translateX(7px);
-    }
-
-    /* -----------------------------
-       DATE SCREEN
-    ----------------------------- */
-
-    .date-heading {
-      margin-bottom: 36px;
-    }
-
-    .month {
-      font-size: 14px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 10px;
-    }
-
-    .calendar {
-      width: min(650px, 100%);
-      margin: 0 auto;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-    }
-
-    .weekday {
-      padding: 15px 5px;
-      font-size: 10px;
-      letter-spacing: .14em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .date {
-      min-height: 110px;
-      border-top: 1px solid var(--line);
-      border-right: 1px solid var(--line);
-      background: transparent;
-      cursor: pointer;
-      position: relative;
-      padding: 16px 8px;
-      transition: background .25s ease;
-    }
-
-    .date:last-child {
-      border-right: none;
-    }
-
-    .date:hover {
-      background: rgba(255,255,255,.55);
-    }
-
-    .date-number {
-      font-size: 19px;
-    }
-
-    .date-note {
-      margin-top: 10px;
-      font-family: "Caveat", cursive;
-      font-size: 16px;
-      color: var(--coral);
-      line-height: 1.1;
-    }
-
-    .oyster {
-      font-size: 18px;
-      margin-top: 8px;
-    }
-
-    .date.selected {
-      background: var(--ink);
-      color: white;
-    }
-
-    .date.selected .date-note {
-      color: #f3c4b2;
-    }
-
-    /* -----------------------------
-       FOOD SCREEN
-    ----------------------------- */
-
-    .food-heading {
-      margin-bottom: 30px;
-    }
-
-    .food-list {
-      width: min(700px, 100%);
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .food-card {
-      display: grid;
-      grid-template-columns: 25% 75%;
-      min-height: 88px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.38);
-      text-align: left;
-      cursor: pointer;
-      transition:
-        transform .25s ease,
-        background .25s ease,
-        border-color .25s ease;
-      overflow: hidden;
-    }
-
-    .food-card:hover {
-      transform: translateY(-3px);
-      background: rgba(255,255,255,.75);
-      border-color: var(--ink);
-    }
-
-    .food-card.selected {
-      background: var(--ink);
-      color: white;
-      border-color: var(--ink);
-    }
-
-    .cuisine {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 16px;
-      border-right: 1px solid var(--line);
-    }
-
-    .food-card.selected .cuisine {
-      border-color: rgba(255,255,255,.25);
-    }
-
-    .cuisine-name {
-      font-size: 11px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    .cuisine-native {
-      font-family: "Caveat", cursive;
-      font-size: 17px;
-      color: var(--coral);
-      margin-top: 4px;
-    }
-
-    .food-card.selected .cuisine-native {
-      color: #f3c4b2;
-    }
-
-    .restaurant-info {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .restaurant-name {
-      font-size: 17px;
-      font-weight: 500;
-    }
-
-    .restaurant-address {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .food-card.selected .restaurant-address {
-      color: rgba(255,255,255,.65);
-    }
-
-    .maps-link {
-      flex-shrink: 0;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: .05em;
-      border-bottom: 1px solid currentColor;
-      padding-bottom: 2px;
-    }
-
-    .food-card.selected .maps-link {
-      color: white;
-    }
-
-    /* -----------------------------
-       DOG TRANSITION
-    ----------------------------- */
-
-    .dogs-running {
-      position: relative;
-      width: min(600px, 90vw);
-      height: 250px;
-      margin: 20px auto 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .running-dog {
-      width: min(210px, 38vw);
-      height: 210px;
-      object-fit: contain;
-    }
-
-    .dog-left {
-      animation: runLeft 1.4s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-
-    .dog-right {
-      animation: runRight 1.4s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-
-    @keyframes runLeft {
-      from {
-        transform: translateX(-120px) rotate(-8deg);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(65px) rotate(3deg);
-        opacity: 1;
-      }
-    }
-
-    @keyframes runRight {
-      from {
-        transform: translateX(120px) rotate(8deg);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(-65px) rotate(-3deg);
-        opacity: 1;
-      }
-    }
-
-    /* -----------------------------
-       FINAL SCREEN
-    ----------------------------- */
-
-    .final-title {
-      font-size: clamp(35px, 8vw, 70px);
-    }
-
-    .final-image {
-      width: min(520px, 85vw);
-      height: min(390px, 55vw);
-      object-fit: contain;
-      margin: 15px auto 18px;
-      mix-blend-mode: multiply;
-    }
-
-    .final-hand {
-      font-family: "Caveat", cursive;
-      color: var(--coral);
-      font-size: 28px;
-      margin-top: 5px;
-    }
-
-    /* -----------------------------
-       PROGRESS
-    ----------------------------- */
-
-    .progress {
-      position: fixed;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-      z-index: 100;
-    }
-
-    .progress-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #cfc6bb;
-      transition: all .3s ease;
-    }
-
-    .progress-dot.active {
-      width: 18px;
-      border-radius: 10px;
-      background: var(--ink);
-    }
-
-    /* -----------------------------
-       MOBILE
-    ----------------------------- */
-
-    @media (max-width: 600px) {
-      .screen {
-        padding: 25px 18px 55px;
-      }
-
-      .body-copy {
-        font-size: 15px;
-      }
-
-      .date {
-        min-height: 92px;
-        padding: 12px 4px;
-      }
-
-      .date-number {
-        font-size: 17px;
-      }
-
-      .date-note {
-        font-size: 14px;
-      }
-
-      .weekday {
-        font-size: 8px;
-        letter-spacing: .08em;
-      }
-
-      .food-card {
-        min-height: 82px;
-      }
-
-      .cuisine {
-        padding: 11px;
-      }
-
-      .restaurant-info {
-        padding: 12px 14px;
-      }
-
-      .restaurant-name {
-        font-size: 14px;
-      }
-
-      .maps-link {
-        font-size: 9px;
-      }
-
-      .dogs-running {
-        height: 190px;
-      }
-
-      .running-dog {
-        width: 145px;
-        height: 145px;
-      }
-
-      @keyframes runLeft {
-        from {
-          transform: translateX(-100px);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(40px);
-          opacity: 1;
-        }
-      }
-
-      @keyframes runRight {
-        from {
-          transform: translateX(100px);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(-40px);
-          opacity: 1;
-        }
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<div id="app">
-
-  <!-- =========================================
-       SCREEN 1
-  ========================================== -->
-
-  <section class="screen active" id="screen1">
-    <div class="content">
-
-      <img
-        src="images/first-page.gif"
-        class="dog dog-intro"
-        alt=""
-      >
-
-      <p class="eyebrow">a small invitation</p>
-
-      <h1 class="title">
-        okay, I know I said<br>
-        I wouldn't ask you out<br>
-        for a while...
-      </h1>
-
-      <button class="next" onclick="goTo(1)">
-        ↓
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 2
-  ========================================== -->
-
-  <section class="screen" id="screen2">
-    <div class="content">
-
-      <img
-        src="images/third-page.gif"
-        class="dog dog-choice"
-        alt=""
-      >
-
-      <p class="body-copy">
-        but there are way too many good restaurants
-        I want to try.<br><br>
-
-        I can't finish them all by myself.
-      </p>
-
-      <img
-        src="images/fourth-page.gif"
-        class="dog dog-date"
-        alt=""
-      >
-
-      <p class="hand" style="font-size: 30px;">
-        would you join me?
-      </p>
-
-      <div class="button-row">
-        <button
-          class="btn btn-primary"
-          onclick="acceptInvitation()"
-        >
-          YES ♡
-        </button>
-
-        <button
-          class="btn"
-          id="noBtn"
-          onmouseenter="escapeNo()"
-          ontouchstart="escapeNo(event)"
-        >
-          NO
-        </button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 3 — DATE
-  ========================================== -->
-
-  <section class="screen" id="screen3">
-    <div class="content">
-
-      <div class="date-heading">
-        <p class="eyebrow">chapter two</p>
-
-        <h1 class="title">
-          so... when are we eating?
-        </h1>
-
-        <div class="month">
-          September 2026
-        </div>
-      </div>
-
-      <div class="calendar">
-
-        <div class="calendar-grid">
-
-          <div class="weekday">MON</div>
-          <div class="weekday">TUE</div>
-          <div class="weekday">WED</div>
-          <div class="weekday">THU</div>
-          <div class="weekday">FRI</div>
-          <div class="weekday">SAT</div>
-          <div class="weekday">SUN</div>
-
-          <button class="date" onclick="selectDate(22, this)">
-            <div class="date-number">22</div>
-          </button>
-
-          <button class="date" onclick="selectDate(23, this)">
-            <div class="date-number">23</div>
-            <div class="oyster">🦪</div>
-            <div class="date-note">oysters</div>
-          </button>
-
-          <button class="date" onclick="selectDate(24, this)">
-            <div class="date-number">24</div>
-          </button>
-
-          <button class="date" onclick="selectDate(25, this)">
-            <div class="date-number">25</div>
-          </button>
-
-          <button class="date" onclick="selectDate(26, this)">
-            <div class="date-number">26</div>
-          </button>
-
-          <button class="date" onclick="selectDate(27, this)">
-            <div class="date-number">27</div>
-          </button>
-
-          <button class="date" onclick="selectDate(28, this)">
-            <div class="date-number">28</div>
-          </button>
-
-        </div>
-
-      </div>
-
-      <div id="selectedDateText" class="small-hand" style="margin-top:22px; min-height:25px;"></div>
-
-      <button
-        class="next"
-        id="dateNext"
-        onclick="goTo(3)"
-        style="display:none;"
-      >
-        →
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 4 — FOOD
-  ========================================== -->
-
-  <section class="screen" id="screen4">
-    <div class="content">
-
-      <div class="food-heading">
-        <p class="eyebrow">chapter three</p>
-
-        <h1 class="title">
-          what are you craving?
-        </h1>
-      </div>
-
-      <div class="food-list">
-
-        <!-- CHINESE -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Chinese')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Chinese</div>
-            <div class="cuisine-native">中餐</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                Hotpot Man
-              </div>
-              <div class="restaurant-address">
-                Huai Khwang / Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/cSnxcBHTi1ifjnHM8?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- KOREAN -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Korean')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Korean</div>
-            <div class="cuisine-native">한식</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                Gopchang House
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/dZiTt9uEAbGa2RNV6?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- GREEK -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Greek')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Greek</div>
-            <div class="cuisine-native">Ελληνικά</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                AVRA
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/LeWzXUoYLp9rSrBb7?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- MEXICAN -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Mexican')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Mexican</div>
-            <div class="cuisine-native">Mexicano</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                La Monita Taqueria
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/PDhr5KC6ZoHbaQby7?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-
-        <!-- PIZZA -->
-        <div
-          class="food-card"
-          onclick="selectFood(this, 'Pizza')"
-        >
-          <div class="cuisine">
-            <div class="cuisine-name">Pizza</div>
-            <div class="cuisine-native">Pizza</div>
-          </div>
-
-          <div class="restaurant-info">
-            <div>
-              <div class="restaurant-name">
-                90Grams
-              </div>
-              <div class="restaurant-address">
-                Bangkok
-              </div>
-            </div>
-
-            <a
-              class="maps-link"
-              href="https://maps.app.goo.gl/S9KHgJ3jD99HaWQr8?g_st=ic"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >
-              Google Maps ↗
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <button
-        class="next"
-        id="foodNext"
-        onclick="goTo(4)"
-        style="display:none;"
-      >
-        →
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 5 — DOGS
-  ========================================== -->
-
-  <section class="screen" id="screen5">
-    <div class="content">
-
-      <p class="eyebrow">excellent choice</p>
-
-      <h1 class="title">
-        good choice.
-      </h1>
-
-      <div class="dogs-running">
-
-        <img
-          src="images/first-page.gif"
-          class="running-dog dog-left"
-          alt=""
-        >
-
-        <img
-          src="images/webwxgetmsgimg-2.gif"
-          class="running-dog dog-right"
-          alt=""
-        >
-
-      </div>
-
-      <p class="hand" style="font-size:30px;">
-        someone is already getting hungry.
-      </p>
-
-      <button
-        class="next"
-        onclick="goTo(5)"
-      >
-        →
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       SCREEN 6 — FINAL
-  ========================================== -->
-
-  <section class="screen" id="screen6">
-    <div class="content">
-
-      <p class="eyebrow">one last thing</p>
-
-      <h1 class="title final-title">
-        it's a date.
-      </h1>
-
-      <img
-        src="images/fifth-page.jpeg"
-        class="final-image"
-        alt="two little dogs having dinner"
-      >
-
-      <div class="final-hand">
-        see you soon ♡
-      </div>
-
-      <p class="small-hand">
-        don't be late.
-      </p>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================
-       PROGRESS
-  ========================================== -->
-
-  <div class="progress">
-    <div class="progress-dot active"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-  </div>
-
-</div>
-
-
-<script>
+\<!DOCTYPE html>
+\<html lang="en">
+\<head>
+&#x20; \<meta charset="UTF-8" />
+&#x20; \<meta
+&#x20;   name="viewport"
+&#x20;   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+&#x20; />
+
+&#x20; \<title>Would you join me?\</title>
+
+&#x20; \<!-- Elegant handwritten font -->
+&#x20; \<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+&#x20; \<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+&#x20; \<link
+&#x20;   href="[https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap](https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600\&family=DM+Sans:wght@400;500;600\&display=swap)"
+&#x20;   rel="stylesheet"
+&#x20; \>
+
+&#x20; \<style>
+&#x20;   :root {
+&#x20;     \--cream: #f7f3ec;
+&#x20;     \--paper: #fcfaf6;
+&#x20;     \--ink: #252321;
+&#x20;     \--muted: #81766e;
+&#x20;     \--coral: #b86b52;
+&#x20;     \--line: #ddd5ca;
+&#x20;     \--yellow: #e8c98e;
+&#x20;     \--white: #ffffff;
+&#x20;   }
+
+&#x20;   \* {
+&#x20;     box-sizing: border-box;
+&#x20;     -webkit-tap-highlight-color: transparent;
+&#x20;   }
+
+&#x20;   html,
+&#x20;   body {
+&#x20;     margin: 0;
+&#x20;     width: 100%;
+&#x20;     height: 100%;
+&#x20;     overflow: hidden;
+&#x20;     background: var(--cream);
+&#x20;     color: var(--ink);
+&#x20;   }
+
+&#x20;   body {
+&#x20;     font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+&#x20;   }
+
+&#x20;   button {
+&#x20;     font: inherit;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      APP
+&#x20;   \----------------------------- \*/
+
+&#x20;   \#app {
+&#x20;     width: 100%;
+&#x20;     height: 100dvh;
+&#x20;     position: relative;
+&#x20;     overflow: hidden;
+&#x20;     background:
+&#x20;       radial-gradient(
+&#x20;         circle at 50% 20%,
+&#x20;         rgba(255,255,255,.7),
+&#x20;         transparent 45%
+&#x20;       ),
+&#x20;       var(--cream);
+&#x20;   }
+
+&#x20;   .screen {
+&#x20;     position: absolute;
+&#x20;     inset: 0;
+&#x20;     display: flex;
+&#x20;     align-items: center;
+&#x20;     justify-content: center;
+&#x20;     padding: 32px 24px;
+&#x20;     opacity: 0;
+&#x20;     pointer-events: none;
+&#x20;     transform: translateX(30px);
+&#x20;     transition:
+&#x20;       opacity .55s ease,
+&#x20;       transform .65s cubic-bezier(.22,.61,.36,1);
+&#x20;   }
+
+&#x20;   .screen.active {
+&#x20;     opacity: 1;
+&#x20;     pointer-events: auto;
+&#x20;     transform: translateX(0);
+&#x20;   }
+
+&#x20;   .content {
+&#x20;     width: min(720px, 100%);
+&#x20;     text-align: center;
+&#x20;     position: relative;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      TYPOGRAPHY
+&#x20;   \----------------------------- \*/
+
+&#x20;   .eyebrow {
+&#x20;     font-size: 11px;
+&#x20;     letter-spacing: .22em;
+&#x20;     text-transform: uppercase;
+&#x20;     color: var(--muted);
+&#x20;     margin-bottom: 24px;
+&#x20;   }
+
+&#x20;   .title {
+&#x20;     font-size: clamp(30px, 7vw, 62px);
+&#x20;     line-height: 1.08;
+&#x20;     letter-spacing: -.045em;
+&#x20;     font-weight: 500;
+&#x20;     margin: 0;
+&#x20;   }
+
+&#x20;   .body-copy {
+&#x20;     margin: 28px auto 0;
+&#x20;     max-width: 500px;
+&#x20;     color: var(--muted);
+&#x20;     font-size: clamp(15px, 2vw, 18px);
+&#x20;     line-height: 1.8;
+&#x20;   }
+
+&#x20;   .hand {
+&#x20;     font-family: "Caveat", cursive;
+&#x20;     color: var(--coral);
+&#x20;     font-weight: 500;
+&#x20;   }
+
+&#x20;   .small-hand {
+&#x20;     font-family: "Caveat", cursive;
+&#x20;     font-size: 19px;
+&#x20;     color: var(--coral);
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      DOG IMAGES
+&#x20;   \----------------------------- \*/
+
+&#x20;   .dog {
+&#x20;     display: block;
+&#x20;     object-fit: contain;
+&#x20;     margin: 0 auto;
+&#x20;     user-select: none;
+&#x20;     pointer-events: none;
+&#x20;   }
+
+&#x20;   .dog-intro {
+&#x20;     width: min(190px, 42vw);
+&#x20;     height: min(190px, 42vw);
+&#x20;     margin-bottom: 28px;
+&#x20;   }
+
+&#x20;   .dog-choice {
+&#x20;     width: min(230px, 52vw);
+&#x20;     height: min(230px, 52vw);
+&#x20;     margin-bottom: 24px;
+&#x20;   }
+
+&#x20;   .dog-date {
+&#x20;     width: min(160px, 36vw);
+&#x20;     height: min(160px, 36vw);
+&#x20;     margin-bottom: 18px;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      BUTTONS
+&#x20;   \----------------------------- \*/
+
+&#x20;   .button-row {
+&#x20;     display: flex;
+&#x20;     justify-content: center;
+&#x20;     gap: 14px;
+&#x20;     margin-top: 38px;
+&#x20;     position: relative;
+&#x20;     min-height: 58px;
+&#x20;   }
+
+&#x20;   .btn {
+&#x20;     border: 1px solid var(--ink);
+&#x20;     background: transparent;
+&#x20;     color: var(--ink);
+&#x20;     border-radius: 999px;
+&#x20;     padding: 14px 30px;
+&#x20;     cursor: pointer;
+&#x20;     transition:
+&#x20;       transform .25s ease,
+&#x20;       background .25s ease,
+&#x20;       color .25s ease;
+&#x20;     min-width: 112px;
+&#x20;   }
+
+&#x20;   .btn:hover {
+&#x20;     transform: translateY(-2px);
+&#x20;   }
+
+&#x20;   .btn-primary {
+&#x20;     background: var(--ink);
+&#x20;     color: white;
+&#x20;   }
+
+&#x20;   .btn-primary:hover {
+&#x20;     background: var(--coral);
+&#x20;     border-color: var(--coral);
+&#x20;   }
+
+&#x20;   /\* The naughty NO button \*/
+&#x20;   \#noBtn {
+&#x20;     position: relative;
+&#x20;     z-index: 20;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      NEXT ARROW
+&#x20;   \----------------------------- \*/
+
+&#x20;   .next {
+&#x20;     margin-top: 48px;
+&#x20;     border: none;
+&#x20;     background: transparent;
+&#x20;     color: var(--ink);
+&#x20;     font-size: 28px;
+&#x20;     cursor: pointer;
+&#x20;     transition: transform .25s ease;
+&#x20;   }
+
+&#x20;   .next:hover {
+&#x20;     transform: translateX(7px);
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      DATE SCREEN
+&#x20;   \----------------------------- \*/
+
+&#x20;   .date-heading {
+&#x20;     margin-bottom: 36px;
+&#x20;   }
+
+&#x20;   .month {
+&#x20;     font-size: 14px;
+&#x20;     letter-spacing: .15em;
+&#x20;     text-transform: uppercase;
+&#x20;     color: var(--muted);
+&#x20;     margin-top: 10px;
+&#x20;   }
+
+&#x20;   .calendar {
+&#x20;     width: min(650px, 100%);
+&#x20;     margin: 0 auto;
+&#x20;     border-top: 1px solid var(--line);
+&#x20;     border-bottom: 1px solid var(--line);
+&#x20;   }
+
+&#x20;   .calendar-grid {
+&#x20;     display: grid;
+&#x20;     grid-template-columns: repeat(7, 1fr);
+&#x20;   }
+
+&#x20;   .weekday {
+&#x20;     padding: 15px 5px;
+&#x20;     font-size: 10px;
+&#x20;     letter-spacing: .14em;
+&#x20;     color: var(--muted);
+&#x20;     text-transform: uppercase;
+&#x20;   }
+
+&#x20;   .date {
+&#x20;     min-height: 110px;
+&#x20;     border-top: 1px solid var(--line);
+&#x20;     border-right: 1px solid var(--line);
+&#x20;     background: transparent;
+&#x20;     cursor: pointer;
+&#x20;     position: relative;
+&#x20;     padding: 16px 8px;
+&#x20;     transition: background .25s ease;
+&#x20;   }
+
+&#x20;   .date:last-child {
+&#x20;     border-right: none;
+&#x20;   }
+
+&#x20;   .date:hover {
+&#x20;     background: rgba(255,255,255,.55);
+&#x20;   }
+
+&#x20;   .date-number {
+&#x20;     font-size: 19px;
+&#x20;   }
+
+&#x20;   .date-note {
+&#x20;     margin-top: 10px;
+&#x20;     font-family: "Caveat", cursive;
+&#x20;     font-size: 16px;
+&#x20;     color: var(--coral);
+&#x20;     line-height: 1.1;
+&#x20;   }
+
+&#x20;   .oyster {
+&#x20;     font-size: 18px;
+&#x20;     margin-top: 8px;
+&#x20;   }
+
+&#x20;   .date.selected {
+&#x20;     background: var(--ink);
+&#x20;     color: white;
+&#x20;   }
+
+&#x20;   .date.selected .date-note {
+&#x20;     color: #f3c4b2;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      FOOD SCREEN
+&#x20;   \----------------------------- \*/
+
+&#x20;   .food-heading {
+&#x20;     margin-bottom: 30px;
+&#x20;   }
+
+&#x20;   .food-list {
+&#x20;     width: min(700px, 100%);
+&#x20;     margin: 0 auto;
+&#x20;     display: flex;
+&#x20;     flex-direction: column;
+&#x20;     gap: 10px;
+&#x20;   }
+
+&#x20;   .food-card {
+&#x20;     display: grid;
+&#x20;     grid-template-columns: 25% 75%;
+&#x20;     min-height: 88px;
+&#x20;     border: 1px solid var(--line);
+&#x20;     background: rgba(255,255,255,.38);
+&#x20;     text-align: left;
+&#x20;     cursor: pointer;
+&#x20;     transition:
+&#x20;       transform .25s ease,
+&#x20;       background .25s ease,
+&#x20;       border-color .25s ease;
+&#x20;     overflow: hidden;
+&#x20;   }
+
+&#x20;   .food-card:hover {
+&#x20;     transform: translateY(-3px);
+&#x20;     background: rgba(255,255,255,.75);
+&#x20;     border-color: var(--ink);
+&#x20;   }
+
+&#x20;   .food-card.selected {
+&#x20;     background: var(--ink);
+&#x20;     color: white;
+&#x20;     border-color: var(--ink);
+&#x20;   }
+
+&#x20;   .cuisine {
+&#x20;     display: flex;
+&#x20;     flex-direction: column;
+&#x20;     justify-content: center;
+&#x20;     padding: 16px;
+&#x20;     border-right: 1px solid var(--line);
+&#x20;   }
+
+&#x20;   .food-card.selected .cuisine {
+&#x20;     border-color: rgba(255,255,255,.25);
+&#x20;   }
+
+&#x20;   .cuisine-name {
+&#x20;     font-size: 11px;
+&#x20;     letter-spacing: .14em;
+&#x20;     text-transform: uppercase;
+&#x20;   }
+
+&#x20;   .cuisine-native {
+&#x20;     font-family: "Caveat", cursive;
+&#x20;     font-size: 17px;
+&#x20;     color: var(--coral);
+&#x20;     margin-top: 4px;
+&#x20;   }
+
+&#x20;   .food-card.selected .cuisine-native {
+&#x20;     color: #f3c4b2;
+&#x20;   }
+
+&#x20;   .restaurant-info {
+&#x20;     padding: 16px 20px;
+&#x20;     display: flex;
+&#x20;     align-items: center;
+&#x20;     justify-content: space-between;
+&#x20;     gap: 15px;
+&#x20;   }
+
+&#x20;   .restaurant-name {
+&#x20;     font-size: 17px;
+&#x20;     font-weight: 500;
+&#x20;   }
+
+&#x20;   .restaurant-address {
+&#x20;     margin-top: 5px;
+&#x20;     color: var(--muted);
+&#x20;     font-size: 12px;
+&#x20;   }
+
+&#x20;   .food-card.selected .restaurant-address {
+&#x20;     color: rgba(255,255,255,.65);
+&#x20;   }
+
+&#x20;   .maps-link {
+&#x20;     flex-shrink: 0;
+&#x20;     color: var(--ink);
+&#x20;     text-decoration: none;
+&#x20;     font-size: 11px;
+&#x20;     letter-spacing: .05em;
+&#x20;     border-bottom: 1px solid currentColor;
+&#x20;     padding-bottom: 2px;
+&#x20;   }
+
+&#x20;   .food-card.selected .maps-link {
+&#x20;     color: white;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      DOG TRANSITION
+&#x20;   \----------------------------- \*/
+
+&#x20;   .dogs-running {
+&#x20;     position: relative;
+&#x20;     width: min(600px, 90vw);
+&#x20;     height: 250px;
+&#x20;     margin: 20px auto 0;
+&#x20;     display: flex;
+&#x20;     align-items: center;
+&#x20;     justify-content: space-between;
+&#x20;   }
+
+&#x20;   .running-dog {
+&#x20;     width: min(210px, 38vw);
+&#x20;     height: 210px;
+&#x20;     object-fit: contain;
+&#x20;   }
+
+&#x20;   .dog-left {
+&#x20;     animation: runLeft 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+&#x20;   }
+
+&#x20;   .dog-right {
+&#x20;     animation: runRight 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+&#x20;   }
+
+&#x20;   @keyframes runLeft {
+&#x20;     from {
+&#x20;       transform: translateX(-120px) rotate(-8deg);
+&#x20;       opacity: 0;
+&#x20;     }
+&#x20;     to {
+&#x20;       transform: translateX(65px) rotate(3deg);
+&#x20;       opacity: 1;
+&#x20;     }
+&#x20;   }
+
+&#x20;   @keyframes runRight {
+&#x20;     from {
+&#x20;       transform: translateX(120px) rotate(8deg);
+&#x20;       opacity: 0;
+&#x20;     }
+&#x20;     to {
+&#x20;       transform: translateX(-65px) rotate(-3deg);
+&#x20;       opacity: 1;
+&#x20;     }
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      FINAL SCREEN
+&#x20;   \----------------------------- \*/
+
+&#x20;   .final-title {
+&#x20;     font-size: clamp(35px, 8vw, 70px);
+&#x20;   }
+
+&#x20;   .final-image {
+&#x20;     width: min(520px, 85vw);
+&#x20;     height: min(390px, 55vw);
+&#x20;     object-fit: contain;
+&#x20;     margin: 15px auto 18px;
+&#x20;     mix-blend-mode: multiply;
+&#x20;   }
+
+&#x20;   .final-hand {
+&#x20;     font-family: "Caveat", cursive;
+&#x20;     color: var(--coral);
+&#x20;     font-size: 28px;
+&#x20;     margin-top: 5px;
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      PROGRESS
+&#x20;   \----------------------------- \*/
+
+&#x20;   .progress {
+&#x20;     position: fixed;
+&#x20;     left: 50%;
+&#x20;     bottom: 22px;
+&#x20;     transform: translateX(-50%);
+&#x20;     display: flex;
+&#x20;     gap: 6px;
+&#x20;     z-index: 100;
+&#x20;   }
+
+&#x20;   .progress-dot {
+&#x20;     width: 5px;
+&#x20;     height: 5px;
+&#x20;     border-radius: 50%;
+&#x20;     background: #cfc6bb;
+&#x20;     transition: all .3s ease;
+&#x20;   }
+
+&#x20;   .progress-dot.active {
+&#x20;     width: 18px;
+&#x20;     border-radius: 10px;
+&#x20;     background: var(--ink);
+&#x20;   }
+
+&#x20;   /\* -----------------------------
+&#x20;      MOBILE
+&#x20;   \----------------------------- \*/
+
+&#x20;   @media (max-width: 600px) {
+&#x20;     .screen {
+&#x20;       padding: 25px 18px 55px;
+&#x20;     }
+
+&#x20;     .body-copy {
+&#x20;       font-size: 15px;
+&#x20;     }
+
+&#x20;     .date {
+&#x20;       min-height: 92px;
+&#x20;       padding: 12px 4px;
+&#x20;     }
+
+&#x20;     .date-number {
+&#x20;       font-size: 17px;
+&#x20;     }
+
+&#x20;     .date-note {
+&#x20;       font-size: 14px;
+&#x20;     }
+
+&#x20;     .weekday {
+&#x20;       font-size: 8px;
+&#x20;       letter-spacing: .08em;
+&#x20;     }
+
+&#x20;     .food-card {
+&#x20;       min-height: 82px;
+&#x20;     }
+
+&#x20;     .cuisine {
+&#x20;       padding: 11px;
+&#x20;     }
+
+&#x20;     .restaurant-info {
+&#x20;       padding: 12px 14px;
+&#x20;     }
+
+&#x20;     .restaurant-name {
+&#x20;       font-size: 14px;
+&#x20;     }
+
+&#x20;     .maps-link {
+&#x20;       font-size: 9px;
+&#x20;     }
+
+&#x20;     .dogs-running {
+&#x20;       height: 190px;
+&#x20;     }
+
+&#x20;     .running-dog {
+&#x20;       width: 145px;
+&#x20;       height: 145px;
+&#x20;     }
+
+&#x20;     @keyframes runLeft {
+&#x20;       from {
+&#x20;         transform: translateX(-100px);
+&#x20;         opacity: 0;
+&#x20;       }
+&#x20;       to {
+&#x20;         transform: translateX(40px);
+&#x20;         opacity: 1;
+&#x20;       }
+&#x20;     }
+
+&#x20;     @keyframes runRight {
+&#x20;       from {
+&#x20;         transform: translateX(100px);
+&#x20;         opacity: 0;
+&#x20;       }
+&#x20;       to {
+&#x20;         transform: translateX(-40px);
+&#x20;         opacity: 1;
+&#x20;       }
+&#x20;     }
+&#x20;   }
+&#x20; \</style>
+\</head>
+
+\<body>
+
+\<div id="app">
+
+&#x20; \<!-- =========================================
+&#x20;      SCREEN 1
+&#x20; \========================================== -->
+
+&#x20; \<section class="screen active" id="screen1">
+&#x20;   \<div class="content">
+
+&#x20;     \<img
+&#x20;       src="images/first-page.gif"
+&#x20;       class="dog dog-intro"
+&#x20;       alt=""
+&#x20;     \>
+
+&#x20;     \<p class="eyebrow">a small invitation\</p>
+
+&#x20;     \<h1 class="title">
+&#x20;       okay, I know I said\<br>
+&#x20;       I wouldn't ask you out\<br>
+&#x20;       for a while...
+&#x20;     \</h1>
+
+&#x20;     \<button class="next" onclick="goTo(1)">
+&#x20;       ↓
+&#x20;     \</button>
+
+&#x20;   \</div>
+&#x20; \</section>
+
+
+&#x20; \<!-- =========================================
+&#x20;      SCREEN 2
+&#x20; \========================================== -->
+
+&#x20; \<section class="screen" id="screen2">
+&#x20;   \<div class="content">
+
+&#x20;     \<img
+&#x20;       src="images/third-page.gif"
+&#x20;       class="dog dog-choice"
+&#x20;       alt=""
+&#x20;     \>
+
+&#x20;     \<p class="body-copy">
+&#x20;       but there are way too many good restaurants
+&#x20;       I want to try.\<br>\<br>
+
+&#x20;       I can't finish them all by myself.
+&#x20;     \</p>
+
+&#x20;     \<img
+&#x20;       src="images/fourth-page.gif"
+&#x20;       class="dog dog-date"
+&#x20;       alt=""
+&#x20;     \>
+
+&#x20;     \<p class="hand" style="font-size: 30px;">
+&#x20;       would you join me?
+&#x20;     \</p>
+
+&#x20;     \<div class="button-row">
+&#x20;       \<button
+&#x20;         class="btn btn-primary"
+&#x20;         onclick="acceptInvitation()"
+&#x20;       \>
+&#x20;         YES ♡
+&#x20;       \</button>
+
+&#x20;       \<button
+&#x20;         class="btn"
+&#x20;         id="noBtn"
+&#x20;         onmouseenter="escapeNo()"
+&#x20;         ontouchstart="escapeNo(event)"
+&#x20;       \>
+&#x20;         NO
+&#x20;       \</button>
+&#x20;     \</div>
+
+&#x20;   \</div>
+&#x20; \</section>
+
+
+&#x20; \<!-- =========================================
+&#x20;      SCREEN 3 — DATE
+&#x20; \========================================== -->
+
+&#x20; \<section class="screen" id="screen3">
+&#x20;   \<div class="content">
+
+&#x20;     \<div class="date-heading">
+&#x20;       \<p class="eyebrow">chapter two\</p>
+
+&#x20;       \<h1 class="title">
+&#x20;         so... when are we eating?
+&#x20;       \</h1>
+
+&#x20;       \<div class="month">
+&#x20;         September 2026
+&#x20;       \</div>
+&#x20;     \</div>
+
+&#x20;     \<div class="calendar">
+
+&#x20;       \<div class="calendar-grid">
+
+&#x20;         \<div class="weekday">MON\</div>
+&#x20;         \<div class="weekday">TUE\</div>
+&#x20;         \<div class="weekday">WED\</div>
+&#x20;         \<div class="weekday">THU\</div>
+&#x20;         \<div class="weekday">FRI\</div>
+&#x20;         \<div class="weekday">SAT\</div>
+&#x20;         \<div class="weekday">SUN\</div>
+
+&#x20;         \<button class="date" onclick="selectDate(22, this)">
+&#x20;           \<div class="date-number">22\</div>
+&#x20;         \</button>
+
+&#x20;         \<button class="date" onclick="selectDate(23, this)">
+&#x20;           \<div class="date-number">23\</div>
+&#x20;           \<div class="oyster">🦪\</div>
+&#x20;           \<div class="date-note">oysters\</div>
+&#x20;         \</button>
+
+&#x20;         \<button class="date" onclick="selectDate(24, this)">
+&#x20;           \<div class="date-number">24\</div>
+&#x20;         \</button>
+
+&#x20;         \<button class="date" onclick="selectDate(25, this)">
+&#x20;           \<div class="date-number">25\</div>
+&#x20;         \</button>
+
+&#x20;         \<button class="date" onclick="selectDate(26, this)">
+&#x20;           \<div class="date-number">26\</div>
+&#x20;         \</button>
+
+&#x20;         \<button class="date" onclick="selectDate(27, this)">
+&#x20;           \<div class="date-number">27\</div>
+&#x20;         \</button>
+
+&#x20;         \<button class="date" onclick="selectDate(28, this)">
+&#x20;           \<div class="date-number">28\</div>
+&#x20;         \</button>
+
+&#x20;       \</div>
+
+&#x20;     \</div>
+
+&#x20;     \<div id="selectedDateText" class="small-hand" style="margin-top:22px; min-height:25px;">\</div>
+
+&#x20;     \<button
+&#x20;       class="next"
+&#x20;       id="dateNext"
+&#x20;       onclick="goTo(3)"
+&#x20;       style="display:none;"
+&#x20;     \>
+&#x20;       →
+&#x20;     \</button>
+
+&#x20;   \</div>
+&#x20; \</section>
+
+
+&#x20; \<!-- =========================================
+&#x20;      SCREEN 4 — FOOD
+&#x20; \========================================== -->
+
+&#x20; \<section class="screen" id="screen4">
+&#x20;   \<div class="content">
+
+&#x20;     \<div class="food-heading">
+&#x20;       \<p class="eyebrow">chapter three\</p>
+
+&#x20;       \<h1 class="title">
+&#x20;         what are you craving?
+&#x20;       \</h1>
+&#x20;     \</div>
+
+&#x20;     \<div class="food-list">
+
+&#x20;       \<!-- CHINESE -->
+&#x20;       \<div
+&#x20;         class="food-card"
+&#x20;         onclick="selectFood(this, 'Chinese')"
+&#x20;       \>
+&#x20;         \<div class="cuisine">
+&#x20;           \<div class="cuisine-name">Chinese\</div>
+&#x20;           \<div class="cuisine-native">中餐\</div>
+&#x20;         \</div>
+
+&#x20;         \<div class="restaurant-info">
+&#x20;           \<div>
+&#x20;             \<div class="restaurant-name">
+&#x20;               Hotpot Man
+&#x20;             \</div>
+&#x20;             \<div class="restaurant-address">
+&#x20;               Huai Khwang / Bangkok
+&#x20;             \</div>
+&#x20;           \</div>
+
+&#x20;           \<a
+&#x20;             class="maps-link"
+&#x20;             href="[https://maps.app.goo.gl/cSnxcBHTi1ifjnHM8?g\_st=ic](https://maps.app.goo.gl/cSnxcBHTi1ifjnHM8?g_st=ic)"
+&#x20;             target="\_blank"
+&#x20;             rel="noopener noreferrer"
+&#x20;             onclick="event.stopPropagation()"
+&#x20;           \>
+&#x20;             Google Maps ↗
+&#x20;           \</a>
+&#x20;         \</div>
+&#x20;       \</div>
+
+
+&#x20;       \<!-- KOREAN -->
+&#x20;       \<div
+&#x20;         class="food-card"
+&#x20;         onclick="selectFood(this, 'Korean')"
+&#x20;       \>
+&#x20;         \<div class="cuisine">
+&#x20;           \<div class="cuisine-name">Korean\</div>
+&#x20;           \<div class="cuisine-native">한식\</div>
+&#x20;         \</div>
+
+&#x20;         \<div class="restaurant-info">
+&#x20;           \<div>
+&#x20;             \<div class="restaurant-name">
+&#x20;               Gopchang House
+&#x20;             \</div>
+&#x20;             \<div class="restaurant-address">
+&#x20;               Bangkok
+&#x20;             \</div>
+&#x20;           \</div>
+
+&#x20;           \<a
+&#x20;             class="maps-link"
+&#x20;             href="[https://maps.app.goo.gl/dZiTt9uEAbGa2RNV6?g\_st=ic](https://maps.app.goo.gl/dZiTt9uEAbGa2RNV6?g_st=ic)"
+&#x20;             target="\_blank"
+&#x20;             rel="noopener noreferrer"
+&#x20;             onclick="event.stopPropagation()"
+&#x20;           \>
+&#x20;             Google Maps ↗
+&#x20;           \</a>
+&#x20;         \</div>
+&#x20;       \</div>
+
+
+&#x20;       \<!-- GREEK -->
+&#x20;       \<div
+&#x20;         class="food-card"
+&#x20;         onclick="selectFood(this, 'Greek')"
+&#x20;       \>
+&#x20;         \<div class="cuisine">
+&#x20;           \<div class="cuisine-name">Greek\</div>
+&#x20;           \<div class="cuisine-native">Ελληνικά\</div>
+&#x20;         \</div>
+
+&#x20;         \<div class="restaurant-info">
+&#x20;           \<div>
+&#x20;             \<div class="restaurant-name">
+&#x20;               AVRA
+&#x20;             \</div>
+&#x20;             \<div class="restaurant-address">
+&#x20;               Bangkok
+&#x20;             \</div>
+&#x20;           \</div>
+
+&#x20;           \<a
+&#x20;             class="maps-link"
+&#x20;             href="[https://maps.app.goo.gl/LeWzXUoYLp9rSrBb7?g\_st=ic](https://maps.app.goo.gl/LeWzXUoYLp9rSrBb7?g_st=ic)"
+&#x20;             target="\_blank"
+&#x20;             rel="noopener noreferrer"
+&#x20;             onclick="event.stopPropagation()"
+&#x20;           \>
+&#x20;             Google Maps ↗
+&#x20;           \</a>
+&#x20;         \</div>
+&#x20;       \</div>
+
+
+&#x20;       \<!-- MEXICAN -->
+&#x20;       \<div
+&#x20;         class="food-card"
+&#x20;         onclick="selectFood(this, 'Mexican')"
+&#x20;       \>
+&#x20;         \<div class="cuisine">
+&#x20;           \<div class="cuisine-name">Mexican\</div>
+&#x20;           \<div class="cuisine-native">Mexicano\</div>
+&#x20;         \</div>
+
+&#x20;         \<div class="restaurant-info">
+&#x20;           \<div>
+&#x20;             \<div class="restaurant-name">
+&#x20;               La Monita Taqueria
+&#x20;             \</div>
+&#x20;             \<div class="restaurant-address">
+&#x20;               Bangkok
+&#x20;             \</div>
+&#x20;           \</div>
+
+&#x20;           \<a
+&#x20;             class="maps-link"
+&#x20;             href="[https://maps.app.goo.gl/PDhr5KC6ZoHbaQby7?g\_st=ic](https://maps.app.goo.gl/PDhr5KC6ZoHbaQby7?g_st=ic)"
+&#x20;             target="\_blank"
+&#x20;             rel="noopener noreferrer"
+&#x20;             onclick="event.stopPropagation()"
+&#x20;           \>
+&#x20;             Google Maps ↗
+&#x20;           \</a>
+&#x20;         \</div>
+&#x20;       \</div>
+
+
+&#x20;       \<!-- PIZZA -->
+&#x20;       \<div
+&#x20;         class="food-card"
+&#x20;         onclick="selectFood(this, 'Pizza')"
+&#x20;       \>
+&#x20;         \<div class="cuisine">
+&#x20;           \<div class="cuisine-name">Pizza\</div>
+&#x20;           \<div class="cuisine-native">Pizza\</div>
+&#x20;         \</div>
+
+&#x20;         \<div class="restaurant-info">
+&#x20;           \<div>
+&#x20;             \<div class="restaurant-name">
+&#x20;               90Grams
+&#x20;             \</div>
+&#x20;             \<div class="restaurant-address">
+&#x20;               Bangkok
+&#x20;             \</div>
+&#x20;           \</div>
+
+&#x20;           \<a
+&#x20;             class="maps-link"
+&#x20;             href="[https://maps.app.goo.gl/S9KHgJ3jD99HaWQr8?g\_st=ic](https://maps.app.goo.gl/S9KHgJ3jD99HaWQr8?g_st=ic)"
+&#x20;             target="\_blank"
+&#x20;             rel="noopener noreferrer"
+&#x20;             onclick="event.stopPropagation()"
+&#x20;           \>
+&#x20;             Google Maps ↗
+&#x20;           \</a>
+&#x20;         \</div>
+&#x20;       \</div>
+
+&#x20;     \</div>
+
+&#x20;     \<button
+&#x20;       class="next"
+&#x20;       id="foodNext"
+&#x20;       onclick="goTo(4)"
+&#x20;       style="display:none;"
+&#x20;     \>
+&#x20;       →
+&#x20;     \</button>
+
+&#x20;   \</div>
+&#x20; \</section>
+
+
+&#x20; \<!-- =========================================
+&#x20;      SCREEN 5 — DOGS
+&#x20; \========================================== -->
+
+&#x20; \<section class="screen" id="screen5">
+&#x20;   \<div class="content">
+
+&#x20;     \<p class="eyebrow">excellent choice\</p>
+
+&#x20;     \<h1 class="title">
+&#x20;       good choice.
+&#x20;     \</h1>
+
+&#x20;     \<div class="dogs-running">
+
+&#x20;       \<img
+&#x20;         src="images/first-page.gif"
+&#x20;         class="running-dog dog-left"
+&#x20;         alt=""
+&#x20;       \>
+
+&#x20;       \<img
+&#x20;         src="images/webwxgetmsgimg-2.gif"
+&#x20;         class="running-dog dog-right"
+&#x20;         alt=""
+&#x20;       \>
+
+&#x20;     \</div>
+
+&#x20;     \<p class="hand" style="font-size:30px;">
+&#x20;       someone is already getting hungry.
+&#x20;     \</p>
+
+&#x20;     \<button
+&#x20;       class="next"
+&#x20;       onclick="goTo(5)"
+&#x20;     \>
+&#x20;       →
+&#x20;     \</button>
+
+&#x20;   \</div>
+&#x20; \</section>
+
+
+&#x20; \<!-- =========================================
+&#x20;      SCREEN 6 — FINAL
+&#x20; \========================================== -->
+
+&#x20; \<section class="screen" id="screen6">
+&#x20;   \<div class="content">
+
+&#x20;     \<p class="eyebrow">one last thing\</p>
+
+&#x20;     \<h1 class="title final-title">
+&#x20;       it's a date.
+&#x20;     \</h1>
+
+&#x20;     \<img
+&#x20;       src="images/fifth-page.jpeg"
+&#x20;       class="final-image"
+&#x20;       alt="two little dogs having dinner"
+&#x20;     \>
+
+&#x20;     \<div class="final-hand">
+&#x20;       see you soon ♡
+&#x20;     \</div>
+
+&#x20;     \<p class="small-hand">
+&#x20;       don't be late.
+&#x20;     \</p>
+
+&#x20;   \</div>
+&#x20; \</section>
+
+
+&#x20; \<!-- =========================================
+&#x20;      PROGRESS
+&#x20; \========================================== -->
+
+&#x20; \<div class="progress">
+&#x20;   \<div class="progress-dot active">\</div>
+&#x20;   \<div class="progress-dot">\</div>
+&#x20;   \<div class="progress-dot">\</div>
+&#x20;   \<div class="progress-dot">\</div>
+&#x20;   \<div class="progress-dot">\</div>
+&#x20;   \<div class="progress-dot">\</div>
+&#x20; \</div>
+
+\</div>
+
+
+\<script>
+
+&#x20; /\* =========================================
+&#x20;    STATE
+&#x20; \========================================== \*/
+
+&#x20; let currentScreen = 0;
+&#x20; let selectedDate = null;
+&#x20; let selectedFood = null;
+
+
+&#x20; /\* =========================================
+&#x20;    SCREEN NAVIGATION
+&#x20; \========================================== \*/
+
+&#x20; function goTo(index) {
+
+&#x20;   const screens = document.querySelectorAll(".screen");
+&#x20;   const dots = document.querySelectorAll(".progress-dot");
+
+&#x20;   screens.forEach((screen, i) => {
+&#x20;     screen.classList.toggle("active", i === index);
+&#x20;   });
+
+&#x20;   dots.forEach((dot, i) => {
+&#x20;     dot.classList.toggle("active", i === index);
+&#x20;   });
+
+&#x20;   currentScreen = index;
+
+&#x20;   window\.scrollTo(0, 0);
+&#x20; }
+
+
+&#x20; /\* =========================================
+&#x20;    YES
+&#x20; \========================================== \*/
+
+&#x20; function acceptInvitation() {
+&#x20;   goTo(2);
+&#x20; }
+
+
+&#x20; /\* =========================================
+&#x20;    NO BUTTON
+&#x20; \========================================== \*/
+
+&#x20; function escapeNo(event) {
+
+&#x20;   if (event) {
+&#x20;     event.preventDefault();
+&#x20;   }
+
+&#x20;   const button = document.getElementById("noBtn");
+
+&#x20;   const padding = 25;
+
+&#x20;   const buttonWidth = button.offsetWidth;
+&#x20;   const buttonHeight = button.offsetHeight;
+
+&#x20;   const maxX = window\.innerWidth - buttonWidth - padding;
+&#x20;   const maxY = window\.innerHeight - buttonHeight - padding;
+
+&#x20;   const minX = padding;
+&#x20;   const minY = padding;
+
+&#x20;   const x =
+&#x20;     minX +
+&#x20;     Math.random() \*
+&#x20;     Math.max(0, maxX - minX);
+
+&#x20;   const y =
+&#x20;     minY +
+&#x20;     Math.random() \*
+&#x20;     Math.max(0, maxY - minY);
+
+&#x20;   button.style.position = "fixed";
+&#x20;   button.style.left = \`${x}px\`;
+&#x20;   button.style.top = \`${y}px\`;
+&#x20; }
+
+
+&#x20; /\* =========================================
+&#x20;    DATE
+&#x20; \========================================== \*/
+
+&#x20; function selectDate(day, element) {
+
+&#x20;   document
+&#x20;     .querySelectorAll(".date")
+&#x20;     .forEach(date => {
+&#x20;       date.classList.remove("selected");
+&#x20;     });
+
+&#x20;   element.classList.add("selected");
+
+&#x20;   selectedDate = day;
+
+&#x20;   const text =
+&#x20;     document.getElementById("selectedDateText");
+
+&#x20;   if (day === 23) {
+
+&#x20;     text.innerHTML =
+&#x20;       "September 23 — oyster night 🦪";
+
+&#x20;   } else {
+
+&#x20;     text.innerHTML =
+&#x20;       \`September ${day} — sounds good.\`;
+
+&#x20;   }
+
+&#x20;   document.getElementById("dateNext").style.display =
+&#x20;     "inline-block";
+&#x20; }
+
+
+&#x20; /\* =========================================
+&#x20;    FOOD
+&#x20; \========================================== \*/
+
+&#x20; function selectFood(card, food) {
+
+&#x20;   document
+&#x20;     .querySelectorAll(".food-card")
+&#x20;     .forEach(item => {
+&#x20;       item.classList.remove("selected");
+&#x20;     });
+
+&#x20;   card.classList.add("selected");
+
+&#x20;   selectedFood = food;
+
+&#x20;   document.getElementById("foodNext").style.display =
+&#x20;     "inline-block";
+&#x20; }
+
+
+&#x20; /\* =========================================
+&#x20;    RESET NO BUTTON
+&#x20; \========================================== \*/
+
+&#x20; window\.addEventListener("resize", () => {
+
+&#x20;   const button =
+&#x20;     document.getElementById("noBtn");
+
+&#x20;   if (currentScreen !== 1) {
+
+&#x20;     button.style.position = "";
+&#x20;     button.style.left = "";
+&#x20;     button.style.top = "";
+
+&#x20;   }
+
+&#x20; });
+
+\</script>
+  <script>
 
   /* =========================================
      STATE
@@ -1069,6 +1228,59 @@
   let currentScreen = 0;
   let selectedDate = null;
   let selectedFood = null;
+  let submitted = false;
+
+
+  /* =========================================
+     GOOGLE FORM
+  ========================================== */
+
+  function submitResponse() {
+
+    // 防止重复提交
+    if (submitted) return;
+
+    // 必须已经选了日期和餐厅
+    if (!selectedDate || !selectedFood) return;
+
+    submitted = true;
+
+    // 创建隐藏 iframe
+    const iframe = document.createElement("iframe");
+    iframe.name = "googleFormFrame";
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+
+    // 创建隐藏 form
+    const form = document.createElement("form");
+
+    form.action =
+      "https://docs.google.com/forms/d/e/1FAIpQLSfZBdWSg2HXJMspBfNLUW8DLUMSp9EBNBRELMJGCgzYUaI9IQ/formResponse";
+
+    form.method = "POST";
+    form.target = "googleFormFrame";
+    form.style.display = "none";
+
+    // 日期
+    const dateInput = document.createElement("input");
+    dateInput.type = "hidden";
+    dateInput.name = "entry.1380454551";
+    dateInput.value = `September ${selectedDate}`;
+
+    // 餐厅
+    const foodInput = document.createElement("input");
+    foodInput.type = "hidden";
+    foodInput.name = "entry.1936826474";
+    foodInput.value = selectedFood;
+
+    form.appendChild(dateInput);
+    form.appendChild(foodInput);
+
+    document.body.appendChild(form);
+
+    // 自动提交
+    form.submit();
+  }
 
 
   /* =========================================
@@ -1076,6 +1288,12 @@
   ========================================== */
 
   function goTo(index) {
+
+    // 如果要进入最后一页
+    // 先把他的选择提交给 Google Form
+    if (index === 5) {
+      submitResponse();
+    }
 
     const screens = document.querySelectorAll(".screen");
     const dots = document.querySelectorAll(".progress-dot");
@@ -1120,8 +1338,11 @@
     const buttonWidth = button.offsetWidth;
     const buttonHeight = button.offsetHeight;
 
-    const maxX = window.innerWidth - buttonWidth - padding;
-    const maxY = window.innerHeight - buttonHeight - padding;
+    const maxX =
+      window.innerWidth - buttonWidth - padding;
+
+    const maxY =
+      window.innerHeight - buttonHeight - padding;
 
     const minX = padding;
     const minY = padding;
@@ -1170,7 +1391,6 @@
 
       text.innerHTML =
         `September ${day} — sounds good.`;
-
     }
 
     document.getElementById("dateNext").style.display =
@@ -1192,7 +1412,20 @@
 
     card.classList.add("selected");
 
-    selectedFood = food;
+    // 获取具体餐厅名字
+    const restaurantElement =
+      card.querySelector(".restaurant-name");
+
+    const restaurantName =
+      restaurantElement
+        ? restaurantElement.textContent.trim()
+        : food;
+
+    // 最终记录：
+    // Korean — Gopchang House
+    // Greek — AVRA
+    // Mexican — La Monita Taqueria
+    selectedFood = `${food} — ${restaurantName}`;
 
     document.getElementById("foodNext").style.display =
       "inline-block";
@@ -1220,5 +1453,5 @@
 
 </script>
 
-</body>
-</html>
+\</body>
+\</html>
